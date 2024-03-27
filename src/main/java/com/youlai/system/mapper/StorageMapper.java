@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.youlai.system.model.entity.Storage;
-import com.youlai.system.plugin.mybatis.annotation.DataPermission;
 import com.youlai.system.model.entity.SysDept;
+import com.youlai.system.plugin.mybatis.annotation.DataPermission;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,9 +13,9 @@ import java.util.List;
 
 
 @Mapper
-public interface SysDeptMapper extends BaseMapper<SysDept> {
+public interface StorageMapper extends BaseMapper<Storage> {
 
     @DataPermission(deptIdColumnName = "id")
     @Override
-    List<SysDept> selectList(@Param(Constants.WRAPPER) Wrapper<SysDept> queryWrapper);
+    List<Storage> selectList(@Param(Constants.WRAPPER) Wrapper<Storage> queryWrapper);
 }

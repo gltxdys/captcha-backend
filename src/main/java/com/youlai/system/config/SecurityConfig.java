@@ -81,7 +81,9 @@ public class SecurityConfig {
                         "/swagger-ui/**",
                         "/swagger-ui.html",
                         "/ws/**",
-                        "/ws-app/**"
+                        "/ws-app/**",
+                        "/api/v1/files/pic",
+                        "/api/v1/**"
                 );
     }
 

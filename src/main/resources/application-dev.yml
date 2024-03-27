@@ -64,8 +64,8 @@ jwt:
   ttl: 7200
 
 oss:
-  # OSS 类型 (目前支持aliyun、minio)
-  type: minio
+  # OSS 类型 (目前支持aliyun、minio、database)
+  type: database
   # MinIO 对象存储服务
   minio:
     # 服务Endpoint
@@ -88,6 +88,16 @@ oss:
     access-key-secret: your-access-key-secret
     # 存储桶名称
     bucket-name: default
+
+pay:
+  type: alipay
+  #支付宝
+  alipay:
+    path: https://openapi-sandbox.dl.alipaydev.com
+    app-id: 9021000135661208
+    alipay-pubkey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy0QmW+f88keYruK4sAbz71pVNnSXMwH+D9TlDF29qIi2qTwMRJwcvmt/Bw3764RD/H4439oaP1aAcyCtca4CyfZeHXyHEOk7+aIqVTdQrxg0eQYzALx1xbkvrVQnv5SXARXAxt9Zcc6s9RQscmOoIkrGpwGrQzqltRbebM7gOfLWYg3oRqWe2rOpBmlNatHF/LuQ8m+IrOSa36qpfWuR0bkQSwpmASUEPNZ+6QCfV1mgWDMjzdHMLf0dNQ0p//APQ1i657Fw/WT410SSh46kpxJMHcBK16XFO/0y/7fJKER/y4U4jyq1sU/CD8o6Y1hwFEIKzQo2gvQpucLwWWcfiwIDAQAB
+    private-key: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC9p3yVhvqG01rsO8ITs+RDhtnyz4Eh9HMb3njZ6RlWHxfMsMCnFc85osdhwKHo63Z7uPdDVSLCR7oO5DX3fOTZtJ7bLqqB10WIfQvz2rFvAMYa/J4+wXbAMks1fBx8n6lSkBMejrl6A9XOHVZslflfKX2GGMxemXkaXq76E4fSGLqeYpeuvWNNJpzKSeZLsYIbwCKP+piQWTcB5Fbs7eVwZJ/gGHt6/r1salpWHJ715h9juHy3CEarAnoMDo1fRF4SKOBqo/wEFOQP73TztORC4klHtuesHeLgwekWhU78zl7Dt3SzmWg6YCyCJN4MYG8Y6JjNglJvX2Lb8rBU10kJAgMBAAECggEAOj6YvVdB02xPjSNhHCnwHWjpwG9HykTHoTR2yv2SgWd1KLDTybyh8qJyNywwzVabAa4xieU4ko/yrSYbCNG7erzE2K2BQfT57svwgsiUG3ISZTFV7BIARVBs1pUyLnfeSXPj20ub3MQWwoEyDJEWj8ovOaKeCSN7FMUlWbnryXK0mQ4Eht6JHh5A6SPs3E61LKHYu2ov/C0HtE4QBrrq7shJds0sK7HW+8JtR60xp1tL7U0Dg/i3CfUL2RnbTohe0v6QX/XJwXDcIotgH/7D2T7ozxX+PnlhSH2sxIDFBpJHdd7AaSk9gnrNkt7pLmc3k5hiD4Z8aQ6PonHcv4o2gQKBgQD2K7RpsGL56n9o9H+dSyGay2ZjhQBahXVySyNw/2xS0vK8CqTEDmC8WpJ+PfSt9Wwnp9sXpLOGkojSeHAGQkvXKHi2Agog0iu87A53aJk/iEvOT5na2ruRfZMrASuNRi816OBpSItoQZiJandIQtNuP+6v19G1aZqCu0Wz1IPLUQKBgQDFOhWubw64PH2feRTvMFDMHabE8Pe7SMGBG12YSs1r+lFjorG13IvboR7BmVBVYALfuZ1BCcfifhnOECtzopPmjozGq6EY2to9FqG0JhFbCJKP57VLixBvQPspqRCgiYp3Cb7wJjW9LIfJLZMNWBcVZDoVOUxi+k8zegjkn0XEOQKBgQCrtSZ9hgQz0GaYvdp5y9sfzvqXNkFd4rNeSpzpB7D2QKABm+b7vg+psf92wR53bLXJH2NKJZ73oiR/snRpWTrvVBKG2ftYk2DgwUMB9VrXnulJeeqWZnXo8M+Dcqh/PVJW5x4JMgnTadXNHA8hv0MdJskFrKNhR8z3nUrsObLIUQKBgQDCsWcrzdgTCSvdnFKNF/36sR6q9VEoIVdcEt6e8uC8QdvMZpPVekTZ58CLzsPds6zCm+HfjT8zl9XzdETgntIv2/KeQFkERy7+9PNl+dpSKjE8O7jdPQdZPCV0Z7/RKlV00zsYqC+OcoIMl5+9oYMQC+PGhcyhPIWoxEQ5I/1kCQKBgQC6btFH2tVoyiZzJAY1jZA2xGGhFciWDvoJF6AriVc4970Qc4D0dLfjvpPnklMWnR1xD9JXmBoUoihRXQ9OZoHhAjFazuJFm0a1VOM/OicH8+gDGlwb4WD7wa8cPqJw2T2Ow7l5hXgVaOYXqlW6fuSQ2+GNsLCMIrL4FDlO2kejjA==
+    encrypt-key:
 
 # springdoc配置： https://springdoc.org/properties.html
 springdoc:

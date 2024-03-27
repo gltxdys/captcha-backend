@@ -123,7 +123,7 @@ public class MinioOssService implements OssService {
      * 删除文件
      *
      * @param filePath 文件路径
-     *                 https://oss.youlai.tech/default/20221120/test.jpg
+     *                 <a href="https://oss.youlai.tech/default/20221120/test.jpg">...</a>
      * @return
      */
     @Override
