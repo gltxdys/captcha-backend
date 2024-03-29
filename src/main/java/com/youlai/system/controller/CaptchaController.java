@@ -7,8 +7,10 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.youlai.system.common.result.Result;
 import com.youlai.system.model.dto.FileInfo;
+import com.youlai.system.model.entity.Record;
 import com.youlai.system.model.vo.IdentifyVo;
 import com.youlai.system.service.OssService;
+import com.youlai.system.service.RecordService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -32,6 +34,8 @@ public class CaptchaController {
 
     @Autowired
     OssService databaseOssService;
+    @Autowired
+    RecordService recordService;
     @SneakyThrows
     @PostMapping("/geetest3")
     public Result<String> geetest3( @RequestParam(value = "file") MultipartFile file){
@@ -64,7 +68,7 @@ public class CaptchaController {
     }
 
     @GetMapping("check")
-    public Result<Object> checkPic(@RequestParam("url") String picUrl){
+    public Result<IdentifyVo> checkPic(@RequestParam("url") String picUrl){
         RestTemplate restTemplate =new RestTemplate();
         String req= StrUtil.format("{}?url={}",getUrl,picUrl);
         ResponseEntity<String> forEntity = restTemplate.getForEntity(req, String.class);
@@ -74,6 +78,10 @@ public class CaptchaController {
         byte[] data = FileUtil.readBytes(imgPath);
         MultipartFile file =new MockMultipartFile(imgPath.getFileName().toString(),data);
         FileInfo fileInfo = databaseOssService.uploadFile(file);
+        //TODO：保存识别记录为异步
+        Record build = Record.builder().picUrl(fileInfo.getUrl()).typeId(1).score(10).status(1).result(result).userId(2L).build();
+        recordService.save(build);
         return Result.success(new IdentifyVo().setResult(result).setPicUrl(fileInfo.getUrl()));
     }
+
 }

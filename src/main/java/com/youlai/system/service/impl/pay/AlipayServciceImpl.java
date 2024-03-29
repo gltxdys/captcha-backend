@@ -13,6 +13,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "pay.alipay")
 @RequiredArgsConstructor
 @Data
+@Slf4j
 public class AlipayServciceImpl implements payService {
 
     private String path;
@@ -61,6 +63,7 @@ public class AlipayServciceImpl implements payService {
         PreCreateTo preCreateTo=new PreCreateTo();
         try {
             repModel = api.precreate(model);
+            log.info("创建预付款二维码：{}",repModel.toJson());
             //TODO 插入订单表
             preCreateTo.setAmount(amount);
             preCreateTo.setOrderId(orderNo);
