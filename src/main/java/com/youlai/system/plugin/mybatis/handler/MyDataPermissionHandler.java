@@ -31,7 +31,7 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
         Class<?> clazz = Class.forName(mappedStatementId.substring(0, mappedStatementId.lastIndexOf(StringPool.DOT)));
         String methodName = mappedStatementId.substring(mappedStatementId.lastIndexOf(StringPool.DOT) + 1);
         Method[] methods = clazz.getDeclaredMethods();
-        for (Method method : methods) {
+/*        for (Method method : methods) {
             DataPermission annotation = method.getAnnotation(DataPermission.class);
             // 如果没有注解或者是超级管理员，直接返回
             if (annotation == null || SecurityUtils.isRoot()) {
@@ -40,7 +40,7 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
             if (method.getName().equals(methodName) || (method.getName() + "_COUNT").equals(methodName)) {
                 return dataScopeFilter(annotation.deptAlias(), annotation.deptIdColumnName(), annotation.userAlias(), annotation.userIdColumnName(), where);
             }
-        }
+        }*/
         return where;
     }
 

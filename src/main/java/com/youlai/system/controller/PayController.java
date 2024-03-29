@@ -2,6 +2,7 @@ package com.youlai.system.controller;
 
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.youlai.system.common.result.Result;
 import com.youlai.system.model.dto.PreCreateTo;
 import com.youlai.system.model.vo.TradeVo;
@@ -17,10 +18,11 @@ public class PayController {
     @Autowired
     payService payService;
 
-    @GetMapping("")
-    public Result<TradeVo> preCreate(@RequestParam("money") Integer money){
+    @GetMapping("/{money}")
+    public Result<TradeVo> preCreate(@PathVariable Integer money){
         PreCreateTo preCreateTo = payService.preCreate(money);
-        QrConfig config = new QrConfig(300, 300);
+        QrConfig config = new QrConfig(100, 100);
+        config.setErrorCorrection(ErrorCorrectionLevel.H);
         //Base64 QrCode
         String qrCode = QrCodeUtil.generateAsBase64(preCreateTo.getQrCode(), config, QR_TYPE_SVG);
         TradeVo tradeVo=new TradeVo(preCreateTo,qrCode);

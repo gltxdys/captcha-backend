@@ -83,7 +83,8 @@ public class SecurityConfig {
                         "/ws/**",
                         "/ws-app/**",
                         "/api/v1/files/pic",
-                        "/api/v1/**"
+                        "/api/v1/pay/**",
+                        "/api/v1/captcha/**"
                 );
     }
 

@@ -15,7 +15,7 @@ import java.sql.Blob;
 public class Storage extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private long id;
-    private long userId;
+    private int userId;
     private Integer del;
     private byte[] storageData;
 }
