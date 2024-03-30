@@ -31,5 +31,4 @@ public interface TradeService extends IService<Trade> {
     IPage<Trade> getTradePage(TradeQuery query);
 
 
-
 }

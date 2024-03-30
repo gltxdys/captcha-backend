@@ -8,7 +8,7 @@ import com.youlai.system.model.dto.PreCreateTo;
 * @date 2024/3/27 下午7:14
 * @version 1.0
 */
-public interface payService {
+public interface PayService {
     /**
     * 创建付款码
     */
