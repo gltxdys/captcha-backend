@@ -5,18 +5,23 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.generator.CodeGenerator;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.mail.MailUtil;
 import cn.hutool.jwt.JWTPayload;
 import com.youlai.system.common.constant.SecurityConstants;
 import com.youlai.system.common.enums.CaptchaTypeEnum;
 import com.youlai.system.model.dto.CaptchaResult;
+import com.youlai.system.model.dto.EmailCaptchaResult;
 import com.youlai.system.model.dto.LoginResult;
 import com.youlai.system.plugin.captcha.CaptchaProperties;
+import com.youlai.system.security.util.EmailUtils;
 import com.youlai.system.service.AuthService;
 import com.youlai.system.security.util.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +33,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.awt.*;
+import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -47,6 +53,7 @@ public class AuthServiceImpl implements AuthService {
     private final CodeGenerator codeGenerator;
     private final Font captchaFont;
     private final CaptchaProperties captchaProperties;
+    private final RedissonClient redissonClient;
 
     /**
      * 登录
@@ -133,4 +140,13 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+    public EmailCaptchaResult getEmailCaptcha(String email) {
+        String emailKey = IdUtil.fastSimpleUUID();
+        String emailValue =RandomUtil.randomString(6);
+        redissonClient.getBucket(emailKey).set(emailValue, Duration.ofMinutes(1));
+        MailUtil.send(email,"邮箱验证码",emailValue,false);
+        return EmailCaptchaResult.builder()
+                .emailKey(emailKey)
+                .build();
+    }
 }

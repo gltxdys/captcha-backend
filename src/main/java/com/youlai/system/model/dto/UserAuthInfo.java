@@ -31,5 +31,6 @@ public class UserAuthInfo {
     private Set<String> perms;
 
     private Integer dataScope;
+    private String email;
 
 }

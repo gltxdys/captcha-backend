@@ -88,6 +88,7 @@
         <id property="userId" column="userId" jdbcType="BIGINT"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="BOOLEAN"/>
         <result property="deptId" column="dept_id" jdbcType="BIGINT"></result>
         <collection property="roles" ofType="string" javaType="java.util.Set">
@@ -104,6 +105,7 @@
             t1.PASSWORD,
             t1.STATUS,
             t1.dept_id ,
+            t1.email,
             t3.CODE
         FROM
             sys_user t1

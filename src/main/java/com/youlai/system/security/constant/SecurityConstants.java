@@ -13,5 +13,7 @@ public interface SecurityConstants {
      */
     String LOGIN_PATH = "/api/v1/auth/login";
 
+    String PasswordPath = "/api/v1/auth/password";
+
 
 }

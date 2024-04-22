@@ -25,6 +25,7 @@ import java.io.IOException;
 public class CaptchaValidationFilter extends OncePerRequestFilter {
 
     private static final AntPathRequestMatcher LOGIN_PATH_REQUEST_MATCHER = new AntPathRequestMatcher(com.youlai.system.security.constant.SecurityConstants.LOGIN_PATH, "POST");
+    private static final AntPathRequestMatcher PASSWORD_PATH_REQUEST_MATCHER = new AntPathRequestMatcher(com.youlai.system.security.constant.SecurityConstants.PasswordPath, "POST");
 
     public static final String CAPTCHA_CODE_PARAM_NAME = "captchaCode";
     public static final String CAPTCHA_KEY_PARAM_NAME = "captchaKey";

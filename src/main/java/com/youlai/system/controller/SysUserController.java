@@ -1,5 +1,7 @@
 package com.youlai.system.controller;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -16,12 +18,16 @@ import com.youlai.system.model.query.UserPageQuery;
 import com.youlai.system.model.vo.UserExportVO;
 import com.youlai.system.model.vo.UserInfoVO;
 import com.youlai.system.model.vo.UserPageVO;
+import com.youlai.system.security.util.SecurityUtils;
 import com.youlai.system.service.SysUserService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +56,7 @@ import java.util.List;
 public class SysUserController {
 
     private final SysUserService userService;
+    private final RedissonClient redissonClient;
 
     @Operation(summary = "用户分页列表")
     @GetMapping("/page")
@@ -108,6 +115,44 @@ public class SysUserController {
             @RequestParam String password
     ) {
         boolean result = userService.updatePassword(userId, password);
+        return Result.judge(result);
+    }
+
+    @Operation(summary = "修改用户密码")
+    @PostMapping(value = "/update/password")
+    public Result updateMyPassword(
+            @RequestPart("emailkey") String emailKey,
+            @RequestPart("emailValue") String emailValue,
+            @RequestPart("password") String password
+    ) {
+        if(!redissonClient.getBucket(emailKey).isExists()){
+            return Result.failed("验证码过期！");
+        }
+        String value = (String) redissonClient.getBucket(emailKey).getAndDelete();
+        if(!StrUtil.equalsIgnoreCase(value,emailValue)){
+            return Result.failed("验证码错误！");
+        }
+        Long userId = SecurityUtils.getUserId();
+        boolean result = userService.updatePassword(userId, password);
+        return Result.judge(result);
+    }
+
+    @Operation(summary = "修改用户邮箱")
+    @PostMapping(value = "/update/email")
+    public Result updateEmail(
+            @RequestPart("emailkey") String emailKey,
+            @RequestPart("emailValue") String emailValue
+    ) {
+        if(!redissonClient.getBucket(emailKey).isExists()){
+            return Result.failed("验证码过期！");
+        }
+        String value = (String) redissonClient.getBucket(emailKey).getAndDelete();
+        if(!StrUtil.equalsIgnoreCase(value,emailValue)){
+            return Result.failed("验证码错误！");
+        }
+        String email = (String) redissonClient.getBucket(emailKey+":email").getAndDelete();
+        Long userId = SecurityUtils.getUserId();
+        boolean result = userService.updateEmail(userId, email);
         return Result.judge(result);
     }
 

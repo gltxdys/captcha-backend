@@ -1,24 +1,29 @@
 package com.youlai.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youlai.system.common.constant.SystemConstants;
+import com.youlai.system.common.enums.TradeEnum;
 import com.youlai.system.common.util.DateUtils;
 import com.youlai.system.converter.UserConverter;
 import com.youlai.system.mapper.SysUserMapper;
 import com.youlai.system.mapper.TradeMapper;
+import com.youlai.system.mapper.UserScoreMapper;
 import com.youlai.system.model.bo.UserBO;
 import com.youlai.system.model.bo.UserFormBO;
 import com.youlai.system.model.dto.UserAuthInfo;
 import com.youlai.system.model.entity.SysUser;
 import com.youlai.system.model.entity.Trade;
+import com.youlai.system.model.entity.UserScore;
 import com.youlai.system.model.form.UserForm;
 import com.youlai.system.model.query.TradeQuery;
 import com.youlai.system.model.query.UserPageQuery;
@@ -51,11 +56,20 @@ public class TradeServiceImpl extends ServiceImpl<TradeMapper, Trade> implements
 
     @Autowired
     TradeMapper tradeMapper;
+    @Autowired
+    UserScoreMapper scoreMapper;
     public IPage<Trade> getTradePage(TradeQuery query) {
         // 参数构建
         Page<Trade> page = new Page<>(query.getPageNum(), query.getPageSize());
         QueryWrapper<Trade> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id",query.getUserId());
         return tradeMapper.selectPage(page, wrapper);
+    }
+
+    public boolean tradeSuccess(Trade trade) {
+        UpdateWrapper<Trade> updateWrapper =new UpdateWrapper<Trade>()
+                .eq("trade_no",trade.getTradeNo()).set("status", TradeEnum.SUCCESS.getValue()).set("pay_time", DateUtil.now());
+        tradeMapper.update(updateWrapper);
+        return false;
     }
 }

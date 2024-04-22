@@ -1,6 +1,8 @@
 package com.youlai.system;
 
 import com.youlai.system.model.entity.SysUser;
+import com.youlai.system.service.CaptchaTypeService;
+import com.youlai.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class RedisTests {
     @Autowired
     private  RedisTemplate redisTemplate;
 
+    @Autowired
+    private CaptchaTypeService captchaTypeService;
+
     /**
      * Redis 序列化测试
      */
@@ -35,6 +40,10 @@ public class RedisTests {
         SysUser userCache = (SysUser)redisTemplate.opsForValue().get("user");
         log.info("userCache:{}", userCache);
 
+    }
+    @Test
+    public void testCaptchaType() {
+        System.out.println(captchaTypeService.getAllCaptchaTypeVoList());
     }
 
 }

@@ -189,6 +189,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         );
     }
 
+    @Override
+    public boolean updateEmail(Long userId, String email) {
+        return this.update(new LambdaUpdateWrapper<SysUser>()
+                .eq(SysUser::getId, userId)
+                .set(SysUser::getEmail, email)
+        );
+    }
+
     /**
      * 根据用户名获取认证信息
      *

@@ -30,4 +30,6 @@ public interface JwtClaimConstants {
      */
     String AUTHORITIES = "authorities";
 
+    String EMAIL = "email";
+
 }

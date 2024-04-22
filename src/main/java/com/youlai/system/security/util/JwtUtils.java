@@ -65,6 +65,7 @@ public class JwtUtils {
         payload.put(JwtClaimConstants.USER_ID, userDetails.getUserId()); // 用户ID
         payload.put(JwtClaimConstants.DEPT_ID, userDetails.getDeptId()); // 部门ID
         payload.put(JwtClaimConstants.DATA_SCOPE, userDetails.getDataScope()); // 数据权限范围
+        payload.put(JwtClaimConstants.EMAIL, userDetails.getEmail()); // 数据权限范围
 
         // claims 中添加角色信息
         Set<String> roles = userDetails.getAuthorities().stream()
@@ -95,7 +96,7 @@ public class JwtUtils {
         userDetails.setUserId(Convert.toLong(payload.get(JwtClaimConstants.USER_ID))); // 用户ID
         userDetails.setDeptId(Convert.toLong(payload.get(JwtClaimConstants.DEPT_ID))); // 部门ID
         userDetails.setDataScope(Convert.toInt(payload.get(JwtClaimConstants.DATA_SCOPE))); // 数据权限范围
-
+        userDetails.setEmail(Convert.toStr(payload.get(JwtClaimConstants.EMAIL)));
         userDetails.setUsername(Convert.toStr(payload.get(JWTPayload.SUBJECT))); // 用户名
         // 角色集合
         Set<SimpleGrantedAuthority> authorities = ((JSONArray) payload.get(JwtClaimConstants.AUTHORITIES))

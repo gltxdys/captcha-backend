@@ -30,6 +30,8 @@ public class SysUserDetails implements UserDetails {
 
     private String password;
 
+    private String email;
+
     private Boolean enabled;
 
     private Collection<SimpleGrantedAuthority> authorities;
@@ -58,6 +60,7 @@ public class SysUserDetails implements UserDetails {
         this.perms = user.getPerms();
         this.deptId = user.getDeptId();
         this.dataScope = user.getDataScope();
+        this.email = user.getEmail();
     }
 
     public Long getUserId() {

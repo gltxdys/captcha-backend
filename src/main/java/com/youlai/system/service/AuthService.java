@@ -1,6 +1,7 @@
 package com.youlai.system.service;
 
 import com.youlai.system.model.dto.CaptchaResult;
+import com.youlai.system.model.dto.EmailCaptchaResult;
 import com.youlai.system.model.dto.LoginResult;
 
 /**
@@ -31,4 +32,7 @@ public interface AuthService {
      * @return 验证码
      */
     CaptchaResult getCaptcha();
+
+    EmailCaptchaResult getEmailCaptcha(String email);
+
 }

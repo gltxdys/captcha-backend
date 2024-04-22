@@ -20,4 +20,5 @@ public class Record extends BaseEntity {
     private String result;
     private int score;
     private int status;
+    private Integer spend;
 }

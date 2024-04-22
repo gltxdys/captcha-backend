@@ -15,4 +15,6 @@ public interface RecordService extends IService<Record> {
     * 分页查询全部记录
     */
     public IPage<Record> getAllList(BasePageQuery query);
+
+    public boolean save(Record record);
 }

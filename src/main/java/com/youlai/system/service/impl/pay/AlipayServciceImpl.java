@@ -182,10 +182,9 @@ public class AlipayServciceImpl implements PayService {
         if(bucket.isExists()){
             Trade trade = (Trade) bucket.get();
             if(trade.getMoney()!=Double.parseDouble(amount))return false;
-            UpdateWrapper<Trade> updateWrapper =new UpdateWrapper<Trade>()
-                    .eq("trade_no",tradeNo).set("status", TradeEnum.SUCCESS.getValue()).set("pay_time", DateUtil.now());
-            tradeService.update(updateWrapper);
+            tradeService.tradeSuccess(trade);
             bucket.delete();
+
             return true;
         }
         return false;
